@@ -1,0 +1,53 @@
+.leaflet-container {
+  width: 100%;
+  height: 500px; /* Or 100vh for fullscreen */
+}
+
+.form-control-dateselector {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px; /* Add some space below the input */
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  height: 100%;
+  /* Align centre of label to input */
+  /* align-items: center; */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 16px; /* Add some space below the input container */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px; /* Space between label and input */
+}
+
+.form-control-timeselector {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px; /* Add some space below the input */
+}
+
+.file-input {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px; /* Add some space below the input */
+}
