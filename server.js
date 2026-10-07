@@ -195,7 +195,7 @@ app.get('/api/visited-places', (req, res) => {
     }
 
     // REMOVED quotes around the ? placeholders
-    const sql = `SELECT * FROM visits WHERE substr(startTime, 1, 10) >= date(?) AND substr(startTime, 1, 10) <= date(?) AND (substr(startTime, 12, 8) >= time(?) AND substr(startTime, 12, 8) <= time(?))` + (businessDaysOnly === 'true' ? ' AND strftime("%w", startTime) NOT IN ("0", "6")' : '');
+    const sql = `SELECT * FROM visits WHERE date(substr(startTime, 1, 10)) >= date(?) AND date(substr(startTime, 1, 10)) <= date(?) AND (substr(startTime, 12, 8) >= time(?) AND substr(startTime, 12, 8) <= time(?))` + (businessDaysOnly === 'true' ? ' AND dow NOT IN ("0", "6")' : '');
     
     // Await the promise directly instead of passing a callback
     db.all(sql, [startDate, endDate, startTime, endTime], (err, result) => {
@@ -225,15 +225,20 @@ app.get('/api/activities', (req, res) => {
   try {
     let { startDate, businessDaysOnly, lat, lng } = req.query;
 
-    console.log(`Received query parameters: startDate=${startDate}, businessDaysOnly=${businessDaysOnly}, lat=${lat}, lng=${lng}  `);
-    lat = lat + '%';
-    lng = lng + '%';
-    console.log(`Modified lat/lng for SQL LIKE query: lat=${lat}, lng=${lng}`);
-    // REMOVED quotes around the ? placeholders
-    const sql = `SELECT * FROM activities WHERE substr(startTime, 1, 10) = date(?) and endLat like ? and endLng like ?` + (businessDaysOnly === 'true' ? ' AND strftime("%w", startTime) NOT IN ("0", "6")' : '');
+    console.log(`Query parameters: startDate=${startDate}, businessDaysOnly=${businessDaysOnly}, lat=${lat} +- 0.03, lng=${lng} +- 0.03 `);
+    const datetime = startDate.split('T');
+    console.log(datetime[0] + " " + datetime[1].substr(0,8) )
 
+    const sql = `SELECT * FROM activities` +
+    ` WHERE date(substr(startTime, 1, 10)) = date(?)` +
+    ` and endLat between (?-0.03) and (?+0.03)` +
+    ` and endLng between (?-0.03) and (?+0.03)` +
+    ` and time(substr(endTime, 12, 8)) BETWEEN time(?, '-10 minutes') AND time(?, '+10 minutes')` +
+    (businessDaysOnly === 'true' ? ' AND dow NOT IN ("0", "6")' : '');
+
+    const timeval = datetime[1].substr(0,8);
     // Await the promise directly instead of passing a callback
-    db.all(sql, [startDate, lat, lng], (err, result) => {
+    db.all(sql, [datetime[0], lat, lat, lng, lng, timeval, timeval], (err, result) => {
       if (err) {
         console.error('Error executing query:', err);
         throw err; // This will be caught by the outer try-catch
@@ -247,8 +252,8 @@ app.get('/api/activities', (req, res) => {
       console.log(`Query executed successfully - ${result.length} records retrieved.`);
       return res.status(200).json(result);
       // return result; // Return the result to the outer scope
+      // return result; // Return the result to the outer scope
     });
-    
 
   } catch (err) {
     console.error('Error executing query:', err);

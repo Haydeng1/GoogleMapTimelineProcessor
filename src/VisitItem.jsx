@@ -11,7 +11,7 @@ function VisitItem({ point, dateStr, dayOfWeek, dateClickResponse }) {
         const lng = pointval.lng.toString().slice(0, 6);
         console.log(`Fetching activity data for date: ${date}, lat: ${lat}, lng: ${lng}`);
         const queryParams = new URLSearchParams({
-            startDate: date.split('T')[0],
+            startDate: date,
             lat: lat,
             lng: lng
         });

@@ -14,3 +14,15 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+# Custom Details
+## How this project runs
+1. React Front End - Basic page using Open Street Maps (OSM) for the map with Leaflet for map points and popups.
+2. Express Back End - Upload json endpoint, Multiple get endpoints for the visits, activities and timeline/travel endpoints, with filters available.
+3. SQLite3 - A local database which is created on the first run, and is interfaced with by Express.
+
+## Running this program
+Terminal in Root directory of project.\
+Run React - Dev mode - ```npm run dev```\
+Run Express - ```node ./server.js```

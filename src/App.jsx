@@ -116,10 +116,11 @@ function App() {
         </>
       ): (<>
       <div className="input-group">
-          <label htmlFor="singleDate" className="form-label">Start Date:</label>
+          <label htmlFor="singleDate" className="form-label" style={{ textAlign: 'center' }}>Start Date:</label>
           <input name="singleDate" type="date" className="form-control-dateselector" value={singleDate.toISOString().split('T')[0]} onChange={(e) => {setSingleDate(new Date(e.target.value));console.log(e.target.value)}} />
+          <button className="submit-button" onClick={() => {setSingleDate(new Date(singleDate.getTime() + 86400000)); setEndDate(new Date(singleDate.getTime() + 86400000))}}>Add 1 day</button>
         </div>
-        <button className="submit-button" onClick={() => {setSingleDate(new Date(singleDate.getTime() + 86400000)); setEndDate(new Date(singleDate.getTime() + 86400000))}}>Add 1 day</button>
+
       </>)}
       <div className="input-group">
         <label htmlFor="allday" className="form-label">Business Days Only:</label>
@@ -130,18 +131,17 @@ function App() {
         <input name="allday" type="checkbox" className="" checked={allDay} onChange={(e) => {setAllDay(e.target.checked)}} />
       </div>
       {!allDay && (<>
-      <div className="input-group">
-        <label htmlFor="startTime" className="form-label">Select Start Time:</label>
-        <input name="startTime" type="time" className="form-control-timeselector" value={startTime.toTimeString().slice(0, 5) === '00:00' ? '' : startTime.toTimeString().slice(0, 5)} onChange={(e) => {setStartTime(new Date(`1970-01-01T${e.target.value}`));console.log(e.target.value)}} />
-      </div>
-      <div className="input-group">
-        <label htmlFor="endTime" className="form-label">Select End Time:</label>
-        <input name="endTime" type="time" className="form-control-timeselector" value={endTime.toTimeString().slice(0, 5)} onChange={(e) => {setEndTime(new Date(`1970-01-01T${e.target.value}`));console.log(e.target.value)}} />
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <div className="input-group">
+          <label htmlFor="startTime" className="form-label">Select Between Times:</label>
+          <input name="startTime" type="time" className="form-control-timeselector" value={startTime.toTimeString().slice(0, 5) === '00:00' ? '' : startTime.toTimeString().slice(0, 5)} onChange={(e) => {setStartTime(new Date(`1970-01-01T${e.target.value}`));console.log(e.target.value)}} />
+          <label htmlFor="endTime"> and </label>
+          <input name="endTime" type="time" className="form-control-timeselector" value={endTime.toTimeString().slice(0, 5)} onChange={(e) => {setEndTime(new Date(`1970-01-01T${e.target.value}`));console.log(e.target.value)}} />
+        </div>
       </div>
       </>
       )}
       <div className="input-group">
-        <label htmlFor="endTime" className="form-label">submit for data:</label>
         <button className="submit-button" onClick={handleLoadData}>
           Load Data
         </button>
