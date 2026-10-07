@@ -23,6 +23,12 @@ If you are developing a production application, we recommend using TypeScript wi
 3. SQLite3 - A local database which is created on the first run, and is interfaced with by Express.
 
 ## Running this program
+Currently only tested in a development capacity - using npm run dev.
+Further tests will need to be made before confirming that building it is stable.
+### Pre-requisites
+* NPM installed
+### Steps
 Terminal in Root directory of project.\
-Run React - Dev mode - ```npm run dev```\
-Run Express - ```node ./server.js```
+Install Node Packages - ```npm install``` - Installs necessary packages for system to run\
+Run React - Dev mode - ```npm run dev``` - Front end / Webpage sends requests to the API\
+Run Express - ```node ./server.js``` - The API, which creates and handles communication to database\
