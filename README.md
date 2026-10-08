@@ -25,6 +25,8 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Running this program
 Currently only tested in a development capacity - using npm run dev.
 Further tests will need to be made before confirming that building it is stable.
+### IMPORTANT NOTE
+No user or input validation has been implemented as this is a local only functionality project rather than a secure hardened system.
 ### Pre-requisites
 * NPM installed
 ### Steps
